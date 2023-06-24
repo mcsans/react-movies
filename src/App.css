@@ -31,7 +31,7 @@
 }
 
 .Movie-wrapper {
-  width: 500px;
+  width: 300px;
   background-color: antiquewhite;
   color: black;
 }
@@ -46,20 +46,26 @@
 }
 
 .Movie-title {
-  height: 60px;
-  margin-top: 26px;
+  height: 50px;
+  font-size: 20px;
+  margin-top: 20px;
   font-weight: bold;
 }
 
 .Movie-date {
-  margin-top: 26px;
+  margin-top: 4px;
   font-style: italic;
+  font-size: 20px;
 }
 
 .Movie-rate {
   color: red;
-  margin-bottom: 26px;
+  margin-bottom: 12px;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 0.85em;
   text-decoration: underline;
+}
+
+.Movie-image {
+  width: 100%;
 }
