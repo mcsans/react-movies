@@ -1,0 +1,69 @@
+1. instal react: $ npx create-react-app
+
+2. instal axios: $ npm i axios
+
+3. buat api token di https://www.themoviedb.org/
+
+4. buat .env dan simpan token
+
+5. coding html & css di src/App.js & src/App.css
+
+6. buat endpoint api di src/api.js
+   - Jika process.env.SOMETHING undefined, jalankan perintah di cmd : $ SET NODE_ENV=development
+
+
+====================
+TAHAPAN getMovieList
+====================
+
+- buat api get di src/api.js :
+    export const getMovieList = async () => {
+        const movie = await axios.get(`${baseUrl}/movie/popular?page=1&api_key=${apiKey}`)
+        return movie.data.results
+    }
+
+- buat state & useEffect di src/app.js :
+    const [popularMovies, setPopularMovies] = useState([]);
+
+    useEffect(() => {
+        getMovieList().then((result) => {
+            setPopularMovies(result)
+        }) 
+    }, [])
+
+- mapping data di htmlnya :
+    {popularMovies.map((obj, i) => {
+        return (
+            <div className='Movie-wrapper' key={i}>
+                <div className='Movie-title'>{obj.title}</div>
+                <img className='Movie-image' src={`${process.env.REACT_APP_BASEIMGURL}/${obj.poster_path}`} />
+                <div className='Movie-date'>release: {obj.release_date}</div>
+                <div className='Movie-rate'>{obj.vote_average}</div>
+            </div>
+        )
+    })}
+
+==================
+TAHAPAN seachMovie
+==================
+
+- buat api get di src/api.js :
+    export const searchMovie = async (keyword) => {
+        const search = await axios.get(`${baseUrl}/search/movie?query=${keyword}&page=1&api_key=${apiKey}`)
+        return search.data
+    }
+
+- buat function di src/app.js :
+    const search = async (keyword) => {
+        if(keyword.length > 3) {
+            const query = await searchMovie(keyword.split(' ').join('%'))
+            setPopularMovies(query.results)
+        }
+    }
+
+- beri trigger di htmlnya :
+    <input 
+        placeholder='cari film kesayangan...' 
+        className='Movie-search'
+        onChange={({ target }) => search(target.value)}
+    />
